@@ -1,8 +1,8 @@
-# ZerePy
+#IDLE AI
 
-ZerePy is an open-source Python framework designed to let you deploy your own agents on X, powered by multiple LLMs.
+IDLE AI is an open-source Python framework designed to let you deploy your own agents on X, powered by multiple LLMs.
 
-ZerePy is built from a modularized version of the Zerebro backend. With ZerePy, you can launch your own agent with
+IDLE AI is built from a modularized version of the Zerebro backend. With ZerePy, you can launch your own agent with
 similar core functionality as Zerebro. For creative outputs, you'll need to fine-tune your own model.
 
 ## Features
@@ -35,16 +35,6 @@ similar core functionality as Zerebro. For creative outputs, you'll need to fine
 - Hyperbolic
 - Galadriel
 - XAI (Grok)
-
-## Quickstart
-
-The quickest way to start using ZerePy is to use our Replit template:
-
-https://replit.com/@blormdev/ZerePy?v=1
-
-1. Fork the template (you will need you own Replit account)
-2. Click the run button on top
-3. Voila! your CLI should be ready to use, you can jump to the configuration section
 
 ## Requirements
 
@@ -79,13 +69,13 @@ Follow the steps here to use the official installation: https://python-poetry.or
 2. Clone the repository:
 
 ```bash
-git clone https://github.com/blorm-network/ZerePy.git
+git clone https://github.com/IDLE-AI/AIAgent-IDLE
 ```
 
-3. Go to the `zerepy` directory:
+3. Go to the `AIAgent-IDLE` directory:
 
 ```bash
-cd zerepy
+cd AIAgent-IDLE
 ```
 
 4. Install dependencies:
@@ -425,6 +415,4 @@ Use `help` in the CLI to see all available commands. Key commands include:
 
 ---
 
-Made with ♥ [Blorm](https://Blorm.xyz)
-
-Designed in California
+Made with ♥ [Idle Team]
