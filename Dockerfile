@@ -1,29 +1,35 @@
-# Gunakan image Python 3.10
+# Use Python 3.10
 FROM python:3.10-slim
 
-# Install pip dependencies yang diperlukan poetry & virtualenv
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel
-
-# Install Poetry
-RUN pip install --no-cache-dir poetry
+# Install required system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
 
-# Salin file konfigurasi proyek
+# Install pip dependencies
+RUN pip install --no-cache-dir --upgrade pip
+
+# Install Poetry - specific version to avoid compatibility issues
+RUN pip install --no-cache-dir poetry==1.6.1
+
+# Copy only dependency files first to leverage Docker cache
 COPY pyproject.toml poetry.lock* ./
 
-# Konfigurasi agar tidak membuat virtualenv baru
+# Configure poetry to not use virtual environments
 RUN poetry config virtualenvs.create false
 
-# Install dependencies tanpa menginstal package utama (editable mode)
-RUN poetry install --no-root --extras server
+# Install dependencies with a more reliable approach
+RUN poetry install --no-interaction --no-ansi --no-root --extras server
 
-# Salin seluruh kode aplikasi
+# Copy the rest of the application
 COPY . .
 
-# Port yang akan dibuka
+# Expose the port
 EXPOSE 8000
 
-# Jalankan aplikasi (mode server)
+# Run the application
 CMD ["python", "main.py", "--server", "--host", "0.0.0.0", "--port", "8000"]
