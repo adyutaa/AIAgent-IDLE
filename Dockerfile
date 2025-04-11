@@ -1,23 +1,24 @@
-# Gunakan image python 3.10 (karena poetry-nya butuh Python <3.11)
+# Gunakan image Python 3.10
 FROM python:3.10-slim
 
-# Install dependencies dasar
-RUN apt-get update && apt-get install -y curl build-essential
-
 # Install Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
+RUN pip install --no-cache-dir poetry
 
-# Set PATH untuk poetry
-ENV PATH="/root/.local/bin:$PATH"
-
-# Buat working directory
+# Set working directory
 WORKDIR /app
 
-# Salin semua file ke dalam container
+# Salin file konfigurasi proyek
+COPY pyproject.toml poetry.lock* ./
+
+# Install dependencies
+RUN poetry config virtualenvs.create false \
+ && poetry install --no-root --extras server
+
+# Salin seluruh kode aplikasi
 COPY . .
 
-# Install dependencies tanpa root install dan include server extras
-RUN poetry install --no-root --extras server
+# Port yang akan dibuka
+EXPOSE 8000
 
-# Jalankan app saat container di-run
-CMD ["poetry", "run", "python", "main.py", "--server", "--host", "0.0.0.0", "--port", "8000"]
+# Jalankan aplikasi (mode server)
+CMD ["python", "main.py", "--server", "--host", "0.0.0.0", "--port", "8000"]
